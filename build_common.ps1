@@ -154,7 +154,7 @@ class BuildProject {
 			SuccessMessage "*** SUCCESS! ($(FormatElapsed $fullStopwatch.Elapsed)) ***" $this.modNameCanonical
 		}
 		catch {
-			[System.Media.SystemSounds]::Hand.Play()
+			try { [System.Media.SystemSounds]::Hand.Play() } catch {}
 			throw
 		}
 	}
@@ -1537,7 +1537,7 @@ class ModcookReceiver : StdoutReceiver {
 
 function FailureMessage($message)
 {
-	[System.Media.SystemSounds]::Hand.Play()
+	try { [System.Media.SystemSounds]::Hand.Play() } catch {}
 	Write-Host $message -ForegroundColor "Red"
 }
 
@@ -1548,7 +1548,7 @@ function ThrowFailure($message)
 
 function SuccessMessage($message, $modNameCanonical)
 {
-	[System.Media.SystemSounds]::Asterisk.Play()
+	try { [System.Media.SystemSounds]::Asterisk.Play() } catch {}
 	Write-Host $message -ForegroundColor "Green"
 	Write-Host "$modNameCanonical ready to run." -ForegroundColor "Green"
 }
