@@ -230,7 +230,9 @@ class BuildProject {
 		$this.modX2projPath = "$($this.modSrcRoot)\$($this.modNameFull).x2proj"
 		$this.stagingPath = "$($this.sdkPath)\XComGame\Mods\$($this.modNameCanonical)"
 		$this.xcomModPath = "$($this.stagingPath)\$($this.modNameCanonical).XComMod"
-		$this.finalModPath = "$($this.gamePath)\XComGame\Mods\$($this.modNameCanonical)"
+		$modsRoot = "$($this.gamePath)\XComGame\Mods"
+		if ($env:X2MBC_MODS_ROOT) { $modsRoot = $env:X2MBC_MODS_ROOT }
+		$this.finalModPath = "$modsRoot\$($this.modNameCanonical)"
 		$this.devSrcRoot = "$($this.sdkPath)\Development\Src"
 		$this.commandletHostPath = "$($this.sdkPath)/binaries/Win64/XComGame.com"
 
