@@ -348,7 +348,7 @@ class BuildProject {
 		}
 		
 		Write-Host "Copying mod project to staging..."
-		Robocopy.exe "$($this.modSrcRoot)" "$($this.stagingPath)" *.* $global:def_robocopy_args /XF @xf /XD "ContentForCook"
+		Robocopy.exe "$($this.modSrcRoot)" "$($this.stagingPath)" "*.*" $global:def_robocopy_args /XF @xf /XD "ContentForCook"
 		Write-Host "Copied project to staging."
 
 		if ($this._HasScriptPackages()) {
@@ -401,7 +401,7 @@ class BuildProject {
 	[void]_CopyToSrc() {
 		# mirror the SDK's SrcOrig to its Src
 		Write-Host "Mirroring SrcOrig to Src..."
-		Robocopy.exe "$($this.sdkPath)\Development\SrcOrig" "$($this.devSrcRoot)" *.uc *.uci $global:def_robocopy_args
+		Robocopy.exe "$($this.sdkPath)\Development\SrcOrig" "$($this.devSrcRoot)" "*.uc" "*.uci" $global:def_robocopy_args
 		Write-Host "Mirrored SrcOrig to Src."
 
 		$this._ParseMacroFile("$($this.devSrcRoot)\Core\Globals.uci")
@@ -707,7 +707,7 @@ class BuildProject {
 		# Ideally, the cooking process wouldn't modify the big *.tfc files, but it does, so we don't overwrite existing ones (/XC /XN /XO)
 		# In order to "reset" the cooking direcory, just delete it and let the script recreate them
 		Write-Host "Copying Texture File Caches..."
-		Robocopy.exe "$cookedpcconsoledir" "$($this.cookerOutputPath)" *.tfc /NJH /XC /XN /XO
+		Robocopy.exe "$cookedpcconsoledir" "$($this.cookerOutputPath)" "*.tfc" /NJH /XC /XN /XO
 		Write-Host "Copied Texture File Caches."
 		
 		# Prepare editor args
@@ -764,7 +764,7 @@ class BuildProject {
 	[void]_FinalCopy() {
 		# copy all staged files to the actual game's mods folder
 		# TODO: Is the string interpolation required in the robocopy calls?
-		Robocopy.exe "$($this.stagingPath)" "$($this.finalModPath)" *.* $global:def_robocopy_args
+		Robocopy.exe "$($this.stagingPath)" "$($this.finalModPath)" "*.*" $global:def_robocopy_args
 	}
 
 	[string[]] _PrepareBuildCacheEngineIniWithAdditions ([string] $fileNamePrefix, [array] $lines) {
